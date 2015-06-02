@@ -3,29 +3,6 @@
 class nagios::server (
   # For the tag of the stored configuration to realize
   $nagios_server        = 'default',
-  $apache         = "false",
-  $apache_ssl     = "false",
-  $apache_modules = [
-    'auth_basic',
-    'authn_file',
-    'authz_host',
-    'authz_user',
-    'env',
-    'mime',
-    'negotiation',
-    'dir',
-    'alias',
-    'rewrite',
-    'cgi',
-  ],
-  # The apache config snippet, more useful as a template when using a custom
-  $apache_conf_content    = undef,
-  $apache_conf_source     = undef,
-  $apache_allowed_from          = [],   # Allow access in default template
-  $apache_htpasswd_source = "puppet:///modules/${module_name}/apache_httpd/htpasswd",
-  $php     = "false",
-  $php_apc = "false",
-  # cgi.cfg
   $cgi_authorized_for_system_information        = 'nagiosadmin',
   $cgi_authorized_for_configuration_information = 'nagiosadmin',
   $cgi_authorized_for_system_commands           = 'nagiosadmin',
@@ -109,6 +86,7 @@ class nagios::server (
   $nagios_user         = $::nagios::params::nagios_user,
   $nagios_group        = $::nagios::params::nagios_group,
   $system_service      = $::nagios::params::system_service,
+  $command_file        = "/var/lib/nagios3/rw/nagios.cmd",
 ) inherits ::nagios::params {
 
   # Full nrpe command to run, with default options
