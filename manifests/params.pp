@@ -55,6 +55,7 @@ class nagios::params {
         tag    => $name,
       }
       $nagios_service = 'nagios'
+      $nagios_package = 'nagios'
       $nagios_user    = 'nagios'
       $nagios_home    = '/etc/nagios'
       # nrpe
@@ -90,6 +91,7 @@ class nagios::params {
         tag    => $nagios_plugins_packages,
       }
       $nagios_service = 'nagios'
+      $nagios_package = 'nagios'
       $nagios_user    = 'nagios'
       $nagios_home    = '/etc/nagios'
       # nrpe
@@ -125,6 +127,7 @@ class nagios::params {
         tag    => $nagios_plugins_packages,
       }
       $nagios_service = 'nagios'
+      $nagios_package = 'nagios'
       $nagios_user    = 'nagios'
       $nagios_home    = '/etc/nagios'
       # nrpe
@@ -160,12 +163,14 @@ class nagios::params {
         tag    => $nagios_plugins_packages,
       }
       $nagios_service = 'nagios3'
+      $nagios_package = 'nagios3'
       $nagios_user    = 'nagios'
       $nagios_home    = '/etc/nagios3'
       # nrpe
       $nrpe_cfg_file  = '/etc/nagios3/nrpe.cfg'
       $nagios_plugins = [
         'nagios-nrpe-plugin',
+        'nagios-cgi',
       ]
     }
     default: {
@@ -184,6 +189,7 @@ class nagios::params {
         tag    => $name,
       }
       $nagios_service = 'nagios'
+      $nagios_package = 'nagios'
       $nagios_user    = 'nagios'
       $nagios_home    = '/etc/nagios'
       # nrpe
