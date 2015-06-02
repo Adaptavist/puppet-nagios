@@ -108,6 +108,7 @@ class nagios::server (
   $nagios_plugins      = $::nagios::params::nagios_plugins,
   $nagios_user         = $::nagios::params::nagios_user,
   $nagios_group        = $::nagios::params::nagios_group,
+  $system_service      = $::nagios::params::system_service,
 ) inherits ::nagios::params {
 
   # Full nrpe command to run, with default options
@@ -166,7 +167,7 @@ class nagios::server (
     # Don't get fooled by any process with "nagios" in its command line
     pattern   => "/usr/sbin/${nagios_service}",
     # Work around files created root:root mode 600 (known issue)
-    restart   => "/bin/chgrp nagios ${nagios_home}/nagios_*.cfg && /bin/chmod 640 ${nagios_home}/nagios_*.cfg && /sbin/service ${nagios_service} reload",
+    restart   => "/bin/chgrp ${nagios_group} ${nagios_home}/nagios_*.cfg && /bin/chmod 640 ${nagios_home}/nagios_*.cfg && ${system_service} ${nagios_service} reload",
     require   => Package["${nagios_package}"],
   }
 
