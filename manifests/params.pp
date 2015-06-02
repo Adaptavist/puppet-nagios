@@ -10,11 +10,7 @@ class nagios::params {
     default  => 'lib',
   }
 
-  # The easy bunch
-  $nagios_service = 'nagios'
-  $nagios_user    = 'nagios'
-  # nrpe
-  $nrpe_cfg_file  = '/etc/nagios/nrpe.cfg'
+
   $nrpe_command   = '$USER1$/check_nrpe -H $HOSTADDRESS$'
   $nrpe_options   = '-t 15'
 
@@ -58,6 +54,23 @@ class nagios::params {
         ensure => installed,
         tag    => $name,
       }
+      $nagios_service = 'nagios'
+      $nagios_user    = 'nagios'
+      $nagios_home    = '/etc/nagios'
+      # nrpe
+      $nrpe_cfg_file  = '/etc/nagios/nrpe.cfg'
+      $nagios_plugins = [
+        'nagios-plugins-dhcp',
+        'nagios-plugins-dns',
+        'nagios-plugins-icmp',
+        'nagios-plugins-ldap',
+        'nagios-plugins-nrpe',
+        'nagios-plugins-ping',
+        'nagios-plugins-smtp',
+        'nagios-plugins-snmp',
+        'nagios-plugins-ssh',
+        'nagios-plugins-tcp',
+      ]
     }
     'Gentoo': {
       $nrpe_package       = [ 'net-analyzer/nrpe' ]
@@ -76,6 +89,23 @@ class nagios::params {
         ensure => installed,
         tag    => $nagios_plugins_packages,
       }
+      $nagios_service = 'nagios'
+      $nagios_user    = 'nagios'
+      $nagios_home    = '/etc/nagios'
+      # nrpe
+      $nrpe_cfg_file  = '/etc/nagios/nrpe.cfg'
+      $nagios_plugins = [
+        'nagios-plugins-dhcp',
+        'nagios-plugins-dns',
+        'nagios-plugins-icmp',
+        'nagios-plugins-ldap',
+        'nagios-plugins-nrpe',
+        'nagios-plugins-ping',
+        'nagios-plugins-smtp',
+        'nagios-plugins-snmp',
+        'nagios-plugins-ssh',
+        'nagios-plugins-tcp',
+      ]
     }
     'Debian': {
       $nrpe_package       = [ 'nagios-nrpe-server' ]
@@ -94,6 +124,49 @@ class nagios::params {
         ensure => installed,
         tag    => $nagios_plugins_packages,
       }
+      $nagios_service = 'nagios'
+      $nagios_user    = 'nagios'
+      $nagios_home    = '/etc/nagios'
+      # nrpe
+      $nrpe_cfg_file  = '/etc/nagios/nrpe.cfg'
+      $nagios_plugins = [
+        'nagios-plugins-dhcp',
+        'nagios-plugins-dns',
+        'nagios-plugins-icmp',
+        'nagios-plugins-ldap',
+        'nagios-plugins-nrpe',
+        'nagios-plugins-ping',
+        'nagios-plugins-smtp',
+        'nagios-plugins-snmp',
+        'nagios-plugins-ssh',
+        'nagios-plugins-tcp',
+      ]
+    }
+    'Ubuntu': {
+      $nrpe_package       = [ 'nagios-nrpe-server' ]
+      $nrpe_package_alias = 'nrpe'
+      $nrpe_service       = 'nagios-nrpe-server'
+      $nrpe_user          = 'nagios'
+      $nrpe_group         = 'nagios'
+      $nrpe_pid_file      = hiera('nagios::params::nrpe_pid_file','/var/run/nagios3/nrpe.pid')
+      $nrpe_cfg_dir       = hiera('nagios::params::nrpe_cfg_dir','/etc/nagios3/nrpe.d')
+      $plugin_dir         = hiera('nagios::params::plugin_dir','/usr/lib/nagios3/plugins')
+      $pid_file           = hiera('nagios::params::pid_file','/var/run/nagios3/nagios.pid')
+      $megaclibin         = '/opt/bin/MegaCli'
+      $perl_memcached     = 'libcache-memcached-perl'
+      # No package splitting in Debian
+      @package { 'nagios-plugins':
+        ensure => installed,
+        tag    => $nagios_plugins_packages,
+      }
+      $nagios_service = 'nagios3'
+      $nagios_user    = 'nagios'
+      $nagios_home    = '/etc/nagios3'
+      # nrpe
+      $nrpe_cfg_file  = '/etc/nagios3/nrpe.cfg'
+      $nagios_plugins = [
+        'nagios-nrpe-plugin',
+      ]
     }
     default: {
       $nrpe_package       = [ 'nrpe', 'nagios-plugins' ]
@@ -110,6 +183,23 @@ class nagios::params {
         ensure => installed,
         tag    => $name,
       }
+      $nagios_service = 'nagios'
+      $nagios_user    = 'nagios'
+      $nagios_home    = '/etc/nagios'
+      # nrpe
+      $nrpe_cfg_file  = '/etc/nagios/nrpe.cfg'
+      $nagios_plugins = [
+        'nagios-plugins-dhcp',
+        'nagios-plugins-dns',
+        'nagios-plugins-icmp',
+        'nagios-plugins-ldap',
+        'nagios-plugins-nrpe',
+        'nagios-plugins-ping',
+        'nagios-plugins-smtp',
+        'nagios-plugins-snmp',
+        'nagios-plugins-ssh',
+        'nagios-plugins-tcp',
+      ]
     }
   }
 
