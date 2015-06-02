@@ -14,6 +14,12 @@ class nagios::params {
   $nrpe_command   = '$USER1$/check_nrpe -H $HOSTADDRESS$'
   $nrpe_options   = '-t 15'
 
+
+  $nagios_user    = 'nagios'
+  $nagios_group   = 'nagios'
+  $nrpe_user      = 'nrpe'
+  $nrpe_group     = 'nrpe'
+
   # Optional plugin packages, to be realized by tag where needed
   # Note: We use tag, because we can't use alias for 2 reasons :
   # * http://projects.puppetlabs.com/issues/4459
@@ -42,8 +48,6 @@ class nagios::params {
     'RedHat', 'Fedora', 'CentOS', 'Scientific', 'Amazon': {
       $nrpe_package       = [ 'nrpe', 'nagios-plugins' ]
       $nrpe_service       = 'nrpe'
-      $nrpe_user          = 'nrpe'
-      $nrpe_group         = 'nrpe'
       $nrpe_pid_file      = hiera('nagios::params::nrpe_pid_file','/var/run/nrpe.pid')
       $nrpe_cfg_dir       = hiera('nagios::params::nrpe_cfg_dir','/etc/nrpe.d')
       $plugin_dir         = hiera('nagios::params::plugin_dir',"/usr/${libdir}/nagios/plugins")
@@ -56,7 +60,6 @@ class nagios::params {
       }
       $nagios_service = 'nagios'
       $nagios_package = 'nagios'
-      $nagios_user    = 'nagios'
       $nagios_home    = '/etc/nagios'
       # nrpe
       $nrpe_cfg_file  = '/etc/nagios/nrpe.cfg'
@@ -77,8 +80,6 @@ class nagios::params {
       $nrpe_package       = [ 'net-analyzer/nrpe' ]
       $nrpe_package_alias = 'nrpe'
       $nrpe_service       = 'nrpe'
-      $nrpe_user          = 'nagios'
-      $nrpe_group         = 'nagios'
       $nrpe_pid_file      = '/run/nrpe.pid'
       $nrpe_cfg_dir       = '/etc/nagios/nrpe.d'
       $plugin_dir         = "/usr/${libdir}/nagios/plugins"
@@ -92,7 +93,6 @@ class nagios::params {
       }
       $nagios_service = 'nagios'
       $nagios_package = 'nagios'
-      $nagios_user    = 'nagios'
       $nagios_home    = '/etc/nagios'
       # nrpe
       $nrpe_cfg_file  = '/etc/nagios/nrpe.cfg'
@@ -113,8 +113,6 @@ class nagios::params {
       $nrpe_package       = [ 'nagios-nrpe-server' ]
       $nrpe_package_alias = 'nrpe'
       $nrpe_service       = 'nagios-nrpe-server'
-      $nrpe_user          = 'nagios'
-      $nrpe_group         = 'nagios'
       $nrpe_pid_file      = hiera('nagios::params::nrpe_pid_file','/var/run/nagios/nrpe.pid')
       $nrpe_cfg_dir       = hiera('nagios::params::nrpe_cfg_dir','/etc/nagios/nrpe.d')
       $plugin_dir         = hiera('nagios::params::plugin_dir','/usr/lib/nagios/plugins')
@@ -128,7 +126,6 @@ class nagios::params {
       }
       $nagios_service = 'nagios'
       $nagios_package = 'nagios'
-      $nagios_user    = 'nagios'
       $nagios_home    = '/etc/nagios'
       # nrpe
       $nrpe_cfg_file  = '/etc/nagios/nrpe.cfg'
@@ -149,8 +146,6 @@ class nagios::params {
       $nrpe_package       = [ 'nagios-nrpe-server' ]
       $nrpe_package_alias = 'nrpe'
       $nrpe_service       = 'nagios-nrpe-server'
-      $nrpe_user          = 'nagios'
-      $nrpe_group         = 'nagios'
       $nrpe_pid_file      = hiera('nagios::params::nrpe_pid_file','/var/run/nagios3/nrpe.pid')
       $nrpe_cfg_dir       = hiera('nagios::params::nrpe_cfg_dir','/etc/nagios3/nrpe.d')
       $plugin_dir         = hiera('nagios::params::plugin_dir','/usr/lib/nagios3/plugins')
@@ -164,7 +159,6 @@ class nagios::params {
       }
       $nagios_service = 'nagios3'
       $nagios_package = 'nagios3'
-      $nagios_user    = 'nagios'
       $nagios_home    = '/etc/nagios3'
       # nrpe
       $nrpe_cfg_file  = '/etc/nagios3/nrpe.cfg'
@@ -176,8 +170,6 @@ class nagios::params {
     default: {
       $nrpe_package       = [ 'nrpe', 'nagios-plugins' ]
       $nrpe_service       = 'nrpe'
-      $nrpe_user          = 'nrpe'
-      $nrpe_group         = 'nrpe'
       $nrpe_pid_file      = hiera('nagios::params::nrpe_pid_file','/var/run/nrpe.pid')
       $nrpe_cfg_dir       = hiera('nagios::params::nrpe_cfg_dir','/etc/nagios/nrpe.d')
       $plugin_dir         = hiera('nagios::params::plugin_dir','/usr/libexec/nagios/plugins')
@@ -190,7 +182,6 @@ class nagios::params {
       }
       $nagios_service = 'nagios'
       $nagios_package = 'nagios'
-      $nagios_user    = 'nagios'
       $nagios_home    = '/etc/nagios'
       # nrpe
       $nrpe_cfg_file  = '/etc/nagios/nrpe.cfg'

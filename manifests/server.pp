@@ -106,16 +106,18 @@ class nagios::server (
   $nagios_service      = $::nagios::params::nagios_service,
   $nagios_package      = $::nagios::params::nagios_package,
   $nagios_plugins      = $::nagios::params::nagios_plugins,
+  $nagios_user         = $::nagios::params::nagios_user,
+  $nagios_group        = $::nagios::params::nagios_group,
 ) inherits ::nagios::params {
 
   # Full nrpe command to run, with default options
   $nrpe = "${nrpe_command} ${nrpe_options}"
 
   # Plugin packages required on the server side
-  file { ["${nagios_home}", "${nagios_home}/private" ,"/var/log/nagios3/spool/checkresults"]:
+  file { ["${nagios_home}", "${nagios_home}/private" , "/var/log/${nagios_service}", "/var/log/${nagios_service}/spool", "/var/log/${nagios_service}/spool/checkresults"]:
    ensure => 'directory',
-   owner => 'root',
-   group => 'nagios',
+   owner => "${nagios_user}",
+   group => "${nagios_group}",
   } ->
   package {"${nagios_package}":
     ensure => installed,
@@ -129,8 +131,8 @@ class nagios::server (
   # Custom plugin scripts required on the server
   if $plugin_nginx {
     file { "${plugin_dir}/check_nginx":
-      owner   => 'root',
-      group   => 'root',
+      owner   => "${nagios_user}",
+      group   => "${nagios_group}",
       mode    => '0755',
       content => template('nagios/plugins/check_nginx'),
     }
@@ -141,8 +143,8 @@ class nagios::server (
   }
   if $plugin_xcache {
     file { "${plugin_dir}/check_xcache":
-      owner   => 'root',
-      group   => 'root',
+      owner   => "${nagios_user}",
+      group   => "${nagios_group}",
       mode    => '0755',
       content => template('nagios/plugins/check_xcache'),
     }
@@ -170,24 +172,24 @@ class nagios::server (
 
   # Configuration files
   file { "${nagios_home}/cgi.cfg":
-    owner   => 'root',
-    group   => 'root',
+    owner   => "${nagios_user}",
+    group   => "${nagios_group}",
     mode    => '0644',
     content => template('nagios/cgi.cfg.erb'),
     # No need to reload the service, changes are applied immediately
     require => Package["${nagios_package}"],
   }
   file { "${nagios_home}/nagios.cfg":
-    owner   => 'root',
-    group   => 'root',
+    owner   => "${nagios_user}",
+    group   => "${nagios_group}",
     mode    => '0644',
     content => template('nagios/nagios.cfg.erb'),
     notify  => Service["${nagios_service}"],
     require => Package["${nagios_package}"],
   }
   file { "${nagios_home}/private/resource.cfg":
-    owner   => 'root',
-    group   => 'nagios',
+    owner   => "${nagios_user}",
+    group   => "${nagios_group}",
     mode    => '0640',
     content => template('nagios/resource.cfg.erb'),
     notify  => Service["${nagios_service}"],
@@ -269,8 +271,8 @@ class nagios::server (
     "${nagios_home}/nagios_timeperiod.cfg",
   ]:
     ensure => present,
-    owner  => 'root',
-    group  => 'nagios',
+    owner   => "${nagios_user}",
+    group   => "${nagios_group}",
     mode   => '0640',
     before => Service["${nagios_service}"],
   }
