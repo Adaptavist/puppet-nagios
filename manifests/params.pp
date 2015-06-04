@@ -58,6 +58,7 @@ class nagios::params {
         ensure => installed,
         tag    => $name,
       }
+      $apache_user = 'apache'
       $nagios_service = 'nagios'
       $nagios_package = 'nagios'
       $nagios_home    = '/etc/nagios'
@@ -96,6 +97,7 @@ class nagios::params {
       $nagios_package = 'nagios'
       $nagios_home    = '/etc/nagios'
       $system_service = '/sbin/service'
+      $apache_user = 'apache'
       # nrpe
       $nrpe_cfg_file  = '/etc/nagios/nrpe.cfg'
       $nagios_plugins = [
@@ -130,6 +132,7 @@ class nagios::params {
       $nagios_package = 'nagios'
       $nagios_home    = '/etc/nagios'
       $system_service = '/sbin/service'
+      $apache_user = 'www-data'
       # nrpe
       $nrpe_cfg_file  = '/etc/nagios/nrpe.cfg'
       $nagios_plugins = [
@@ -164,10 +167,20 @@ class nagios::params {
       $nagios_package = 'nagios3'
       $nagios_home    = '/etc/nagios3'
       $system_service = '/usr/sbin/service'
+      $apache_user = 'www-data'
       # nrpe
       $nrpe_cfg_file  = '/etc/nagios3/nrpe.cfg'
       $nagios_plugins = [
         'nagios-nrpe-plugin',
+        'nagios-dhcp-plugins',
+        'nagios-dns-plugins',
+        'nagios-icmp-plugins',
+        'nagios-ldap-plugins',
+        'nagios-ping-plugins',
+        'nagios-smtp-plugins',
+        'nagios-snmp-plugins',
+        'nagios-ssh-plugins',
+        'nagios-tcp-plugins',
       ]
     }
     default: {
@@ -187,6 +200,7 @@ class nagios::params {
       $nagios_package = 'nagios'
       $nagios_home    = '/etc/nagios'
       $system_service = '/sbin/service'
+      $apache_user = 'apache'
       # nrpe
       $nrpe_cfg_file  = '/etc/nagios/nrpe.cfg'
       $nagios_plugins = [
@@ -205,4 +219,3 @@ class nagios::params {
   }
 
 }
-

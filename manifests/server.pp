@@ -87,6 +87,7 @@ class nagios::server (
   $nagios_group        = $::nagios::params::nagios_group,
   $system_service      = $::nagios::params::system_service,
   $command_file        = "/var/lib/nagios3/rw/nagios.cmd",
+  $apache_user         = $::nagios::params::apache_user,
 ) inherits ::nagios::params {
 
   # Full nrpe command to run, with default options
@@ -98,11 +99,18 @@ class nagios::server (
    owner => "${nagios_user}",
    group => "${nagios_group}",
   } ->
+  exec { "usermod -aG ${nagios_group} ${apache_user}":
+  } ->
   package {"${nagios_package}":
     ensure => installed,
   } -> 
   package { $nagios_plugins:
     ensure => installed,
+  } -> 
+  exec {
+      "chmod g+x /var/lib/${nagios_service}/rw":
+          logoutput   => on_failure,
+          onlyif      => ['test -f /var/lib/${nagios_service}/rw'],
   }
   # Plugin packages required on both the client and server sides
   Package <| tag == 'nagios-plugins-http' |>
