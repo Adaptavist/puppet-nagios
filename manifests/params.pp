@@ -172,15 +172,6 @@ class nagios::params {
       $nrpe_cfg_file  = '/etc/nagios3/nrpe.cfg'
       $nagios_plugins = [
         'nagios-nrpe-plugin',
-        'nagios-dhcp-plugins',
-        'nagios-dns-plugins',
-        'nagios-icmp-plugins',
-        'nagios-ldap-plugins',
-        'nagios-ping-plugins',
-        'nagios-smtp-plugins',
-        'nagios-snmp-plugins',
-        'nagios-ssh-plugins',
-        'nagios-tcp-plugins',
       ]
     }
     default: {
