@@ -94,7 +94,7 @@ class nagios::server (
   $nrpe = "${nrpe_command} ${nrpe_options}"
 
   # Plugin packages required on the server side
-  file { ["${nagios_home}", "${nagios_home}/private" , "/var/log/${nagios_service}", "/var/log/${nagios_service}/spool", "/var/log/${nagios_service}/spool/checkresults"]:
+  file { ["${nagios_home}", "${nagios_home}/private" , "/var/log/${nagios_service}", "/var/log/${nagios_service}/spool", "/var/log/${nagios_service}/spool/checkresults", "/var/lib/${nagios_service}", "/var/lib/${nagios_service}/rw"]:
    ensure => 'directory',
    owner => "${nagios_user}",
    group => "${nagios_group}",

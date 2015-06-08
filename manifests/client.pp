@@ -35,7 +35,7 @@ class nagios::client (
   $service_notification_period = $::nagios_service_notification_period,
   $service_use                 = 'generic-service',
   # other
-  $plugin_dir                  = $nagios::params::plugin_dir,
+  $plugin_dir                  = $nagios::params::nrpe_plugin_dir,
   $selinux                     = true
 ) inherits ::nagios::params {
 
@@ -128,9 +128,9 @@ class nagios::client (
   class { '::nagios::check::load': }
   class { '::nagios::check::ntp_time': }
   class { '::nagios::check::ram': }
-  if $::nagios_mysqld {
-    class { '::nagios::check::mysql_health': }
-  }
+  # if $::nagios_mysqld {
+  #   class { '::nagios::check::mysql_health': }
+  # }
   if $::nagios_memcached {
     class { '::nagios::check::memcached': }
   }
