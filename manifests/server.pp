@@ -110,7 +110,7 @@ class nagios::server (
   exec {
       "chmod g+x /var/lib/${nagios_service}/rw":
           logoutput   => on_failure,
-          onlyif      => ['test -f /var/lib/${nagios_service}/rw'],
+          onlyif      => ['test -d /var/lib/${nagios_service}/rw'],
   }
   # Plugin packages required on both the client and server sides
   Package <| tag == 'nagios-plugins-http' |>
