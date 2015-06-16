@@ -36,7 +36,8 @@ class nagios::client (
   $service_use                 = 'generic-service',
   # other
   $plugin_dir                  = $nagios::params::nrpe_plugin_dir,
-  $selinux                     = true
+  $selinux                     = true,
+  $custom_plugins              = {},
 ) inherits ::nagios::params {
 
   # Set the variables to be used, including scoped from elsewhere, based on
@@ -87,6 +88,8 @@ class nagios::client (
     ensure  => 'directory',
     require => Package['nrpe'],
   }
+  File["${nagios::client::plugin_dir}"] -> Nagios::Custom_plugin<||> -> Service["${nagios::params::nrpe_service}"]
+  create_resources('nagios::custom_plugin',  $custom_plugins)
 
   # Where to store configuration for our custom nagios_* facts
   file { '/etc/nagios/facter':

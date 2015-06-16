@@ -88,6 +88,7 @@ class nagios::server (
   $system_service      = $::nagios::params::system_service,
   $command_file        = "/var/lib/nagios3/rw/nagios.cmd",
   $apache_user         = $::nagios::params::apache_user,
+  $custom_plugins      = {},
 ) inherits ::nagios::params {
 
   # Full nrpe command to run, with default options
@@ -112,6 +113,10 @@ class nagios::server (
           logoutput   => on_failure,
           onlyif      => ['test -d /var/lib/${nagios_service}/rw'],
   }
+
+  Package["${nagios_plugins}"] -> Nagios::Custom_plugin<||> -> Service["${nagios_service}"]
+  create_resources('nagios::custom_plugin', $custom_plugins)
+
   # Plugin packages required on both the client and server sides
   Package <| tag == 'nagios-plugins-http' |>
 
